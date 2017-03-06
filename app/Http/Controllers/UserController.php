@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('company')->get();
-        return view('users.index')->with('users', $users);
+        return response()->json($users);
     }
 
     /**
@@ -26,8 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $companies = Company::all();
-        return view('users.create')->with('companies', $companies);
+        // form goes here
     }
 
     /**
@@ -38,12 +37,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User;
-        $user->user_name = $request->input('user_name');
-        $user->user_email = $request->input('user_email');
-        $user->company_id = $request->input('company');
-        $user->save();
-        return 'user created';
+        dd($request);
     }
 
     /**
@@ -67,7 +61,7 @@ class UserController extends Controller
     {
         $companies = Company::all();
         $user = User::find($id);
-        return view('users.edit')->with('user', $user)->with('companies', $companies);
+        dd($id);
     }
 
     /**
@@ -79,12 +73,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $user->user_name = $request->input('user_name');
-        $user->user_email = $request->input('user_email');
-        $user->company_id = $request->input('company');
-        $user->save();
-        return 'user updated';
+        dd($request);
     }
 
     /**

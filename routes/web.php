@@ -12,11 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
-
 Route::resource('users', 'UserController');
 Route::resource('companies', 'CompanyController');
-Route::post('report', 'AbuserController@generateReport')->name('report.generate');
-Route::get('abusers', 'AbuserController@index')->name('abuser.index');
-

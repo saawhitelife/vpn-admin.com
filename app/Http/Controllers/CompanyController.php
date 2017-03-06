@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CompanyController extends Controller
 {
@@ -15,7 +16,7 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::all();
-        return view('companies.index')->with('companies', $companies);
+        return response()->json($companies);
     }
 
     /**
@@ -25,7 +26,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('companies.create');
+        // form goes here
     }
 
     /**
@@ -36,11 +37,12 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        $data = json_decode($request->getContent(), true);
         $company = new Company;
-        $company->company_name = $request->input('company_name');
-        $company->company_quota = $request->input('company_quota');
+        $company->company_name = $data[0]['value'];
+        $company->company_quota = $data[1]['value'];
         $company->save();
-        return 'company created';
+        return Response(200);
     }
 
     /**
@@ -57,39 +59,39 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Company  $company
+     * @param $id
+     * @internal param \App\Company $company
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $company = Company::find($id);
-        return view('companies.edit')->with('company', $company);
+        dd($company);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Company  $company
+     * @param  \Illuminate\Http\Request $request
+     * @param $id
+     * @internal param \App\Company $company
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $company = Company::find($id);
-        $company->company_name = $request->input('company_name');
-        $company->company_quota = $request->input('company_quota');
-        $company->save();
-        return 'company saved';
+        dd($request);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Company  $company
+     * @param $id
+     * @internal param \App\Company $company
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+        dd($id);
         //$company = Company::find($id);
         //$company->delete();
     }
